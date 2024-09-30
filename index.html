@@ -54,6 +54,64 @@
 	<!-- Contenedor para mapa -->
 	<section id="mapContainer"></section>
 
+	<!-- Contenedor para seleccionar el algoritmo a realizar -->
+	<section>
+
+		<!-- selección del tipo de búsqueda del algoritmo -->
+		<div>
+			<h3>Seleccione el tipo de algoritmo de búsqueda: </h3>
+			<form>
+				<label for="searchType-uninformed">
+					<input type="radio" name="searchType-uninformed" value="uninformed">
+					<span>No informada</span>
+				</label>
+				<label for="searchType-informed"></label>
+					<input type="radio" name="searchType-informed" value="informed">
+					<span>Informada</span>
+				</label>
+			</form>
+		</div>
+
+		<!-- opciones de algoritmo no informado -->
+		<div>
+			<h4>Seleccione el algoritmo de búsqueda no informada:</h4>
+			<form>
+				<label for="uninformedAlgorithm-amp">
+					<input type="radio" name="uninformedAlgorithm-amp" value="amplitud" required>
+					<span>Amplitud</span>
+				</label>
+				<label for="uninformedAlgorithm-cost">
+					<input type="radio" name="uninformedAlgorithm-cost" value="costoUniforme">
+					<span>Costo Uniforme</span>
+				</label>
+				<label for="uninformedAlgorithm-prof">
+					<input type="radio" name="uninformedAlgorithm-prof" value="profundidad">
+					<span>Profundidad evitando ciclos</span>
+				</label>
+
+				<button type="submit">Ejecutar algoritmo</button>
+			</form>
+		</div>
+
+		<!-- opciones de algoritmo informada -->
+		<div>
+			<h4>Seleccione el algoritmo de búsqueda informada:</h4>
+			<form>
+				<label for="informedAlgorithm-ava">
+					<input type="radio" name="informedAlgorithm-ava" value="avara" required>
+					<span>Avara</span>
+				</label>
+				<label for="informedAlgorithm-aStar">
+					<input type="radio" name="informedAlgorithm-aStar" value="aStar">
+					<span>A*</span>
+				</label>
+
+				<button type="submit">Ejecutar algoritmo</button>
+			</form>
+		</div>
+		
+	</section>
+
 	<script src="./script.js"></script>
 </body>
 </html>
