@@ -1,0 +1,135 @@
+/* Variables */
+:root{
+	/* colores del mapa */
+	--color-muro: #222831;
+	--color-traficoMedio: #80ed99;
+	--color-traficoPesado: #E84545;
+	--color-pasajero: #BC6FF1;
+	--color-destino: #FFABAB;
+	--color-inicio: #F9ED69;
+	--color-light: #ffffff;
+}
+
+/* Estilos base a todos los contenedores */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html{
+	font-size: 62.5%; /*para poder trabajar con rem mas fácil*/
+	font-family: "DM Sans", sans-serif;
+	scroll-behavior: smooth;
+}
+
+/* Colores para cada tipo de celda */
+.elemento-0 { background-color: var(--color-light); } /* tráfico liviano */
+.elemento-1 { background-color: var(--color-muro); } /* muro */
+.elemento-2 { background-color: var(--color-inicio); } /* punto de partida */
+.elemento-3 { background-color: var(--color-traficoMedio); } /* tráfico medio */
+.elemento-4 { background-color: var(--color-traficoPesado); } /* tráfico pesado */
+.elemento-5 { background-color: var(--color-pasajero); } /* pasajero */
+.elemento-6 { background-color: var(--color-destino); } /* destino */
+
+.header-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	min-width: 320px;
+	height: 260px;
+	text-align: center;
+	background: -webkit-linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+}
+
+.header-container .header--title-container{
+	width: 90%;
+	min-width: 288px;
+	max-width: 900px;
+	height: auto;
+	margin-top: 80px;
+}
+
+.header-container .header--title-container h1{
+	font-size: 5rem;
+	font-weight: bold;
+	line-height: 2.6rem;
+	color: var(--color-light);
+}
+
+.header-container .header--title-container p{
+	margin-top: 30px;
+	font-size: 1.4rem;
+	font-weight: 500;
+	line-height: 2rem;
+	color: var(--color-light);
+}
+
+.form-container{
+	display: flex;
+	margin: 0 auto;
+	justify-content: center;
+	align-items: center;
+	width: 70%;
+	height: 100px;
+	margin-top: 100px;
+}
+
+.form-container form {
+	width: 50%;
+	height: 50px;
+	margin: 0 auto;
+	/* border: 2px solid #000000; */
+	background: -webkit-linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	/* opacity: 0.8; */
+	border-radius: 16px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-size: 200%;
+	transition: background-size 1s ease;
+}
+
+.form-container .form-container--info input{
+	display: none;
+}
+
+.form-container .form-container--info span{
+	font-size: 1.6rem;
+	color: var(--color-light);
+	cursor: pointer;
+}
+
+.form-container form:hover{
+	background: -webkit-linear-gradient(90deg, #6b0ac4,#8d10b8,#0945f7);
+	background: linear-gradient(90deg, #6b0ac4,#8d10b8,#0945f7);
+	background-size: 100%;
+}
+
+/* estilos cuando se carga el mapa */
+.header-container.encoger {
+    height: 50px;
+    transition: height 0.9s ease;
+}
+
+.header--title-container.encoger{
+	margin-top: 0;
+}
+
+.header-container.encoger .header--title-container.encoger h1{
+	margin-top: 10px;	
+	font-size: 2.4rem;
+	transition: font-size 0.9s ease;
+}
+
+.header--info.invisible{
+	display: none;
+}
+
+.form-container.encoger {
+    margin-top: 0;
+    transition: margin-top 0.5s ease;
+}

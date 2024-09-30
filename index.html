@@ -4,16 +4,56 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>smartCar</title>
+	
+	<!-- fuentes -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="./style.css">
+
+	<style>
+        /* Estilos básicos para la tabla que representa el mapa */
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+			margin-bottom: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #000;
+        }
+    </style>
 </head>
 <body>
-	<!-- Subir el archivo txt para que pueda ser leído -->
-	<form action="">
-		<label for="fileInput">
-			<span>Subir archivo de entrada (mapa): </span>
-			<input type="file" id="fileInput" name="input" accept=".txt" required>
-		</label>
-	</form>
-	
+	<header class="header-container">
+		<div class="header--title-container">
+			<h1>Smart Car</h1>
+			<p class="header--info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero velit magnam, fugit perferendis adipisci ut voluptatem et harum molestiae commodi accusamus nesciunt nobis nulla eligendi quidem! Ipsa, modi accusantium. Ut?</p>
+		</div>
+	</header>
+
+	<section class="form-container">
+		<!-- Subir el archivo txt para que pueda ser leído -->
+		<form>
+			<label for="fileInput" class="form-container--info">
+				<span>Subir archivo de entrada (mapa): </span>
+				<input type="file" id="fileInput" name="input" accept=".txt" required>
+			</label>
+		</form>
+	</section>
+
+	<!-- Contenedor para mapa -->
+	<section id="mapContainer"></section>
+
 	<script src="./script.js"></script>
 </body>
 </html>
