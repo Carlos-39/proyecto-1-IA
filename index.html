@@ -4,16 +4,114 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>smartCar</title>
+	
+	<!-- fuentes -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="./style.css">
+
+	<style>
+        /* Estilos básicos para la tabla que representa el mapa */
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+			margin-bottom: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #000;
+        }
+    </style>
 </head>
 <body>
-	<!-- Subir el archivo txt para que pueda ser leído -->
-	<form action="">
-		<label for="fileInput">
-			<span>Subir archivo de entrada (mapa): </span>
-			<input type="file" id="fileInput" name="input" accept=".txt" required>
-		</label>
-	</form>
-	
+	<header class="header-container">
+		<div class="header--title-container">
+			<h1>Smart Car</h1>
+			<p class="header--info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero velit magnam, fugit perferendis adipisci ut voluptatem et harum molestiae commodi accusamus nesciunt nobis nulla eligendi quidem! Ipsa, modi accusantium. Ut?</p>
+		</div>
+	</header>
+
+	<section class="form-container">
+		<!-- Subir el archivo txt para que pueda ser leído -->
+		<form>
+			<label for="fileInput" class="form-container--info">
+				<span>Subir archivo de entrada (mapa): </span>
+				<input type="file" id="fileInput" name="input" accept=".txt" required>
+			</label>
+		</form>
+	</section>
+
+	<!-- Contenedor para mapa -->
+	<section id="mapContainer"></section>
+
+	<!-- Contenedor para seleccionar el algoritmo a realizar -->
+	<section>
+
+		<!-- selección del tipo de búsqueda del algoritmo -->
+		<div>
+			<h3>Seleccione el tipo de algoritmo de búsqueda: </h3>
+			<form>
+				<label for="searchType-uninformed">
+					<input type="radio" name="searchType-uninformed" value="uninformed">
+					<span>No informada</span>
+				</label>
+				<label for="searchType-informed"></label>
+					<input type="radio" name="searchType-informed" value="informed">
+					<span>Informada</span>
+				</label>
+			</form>
+		</div>
+
+		<!-- opciones de algoritmo no informado -->
+		<div>
+			<h4>Seleccione el algoritmo de búsqueda no informada:</h4>
+			<form>
+				<label for="uninformedAlgorithm-amp">
+					<input type="radio" name="uninformedAlgorithm-amp" value="amplitud" required>
+					<span>Amplitud</span>
+				</label>
+				<label for="uninformedAlgorithm-cost">
+					<input type="radio" name="uninformedAlgorithm-cost" value="costoUniforme">
+					<span>Costo Uniforme</span>
+				</label>
+				<label for="uninformedAlgorithm-prof">
+					<input type="radio" name="uninformedAlgorithm-prof" value="profundidad">
+					<span>Profundidad evitando ciclos</span>
+				</label>
+
+				<button type="submit">Ejecutar algoritmo</button>
+			</form>
+		</div>
+
+		<!-- opciones de algoritmo informada -->
+		<div>
+			<h4>Seleccione el algoritmo de búsqueda informada:</h4>
+			<form>
+				<label for="informedAlgorithm-ava">
+					<input type="radio" name="informedAlgorithm-ava" value="avara" required>
+					<span>Avara</span>
+				</label>
+				<label for="informedAlgorithm-aStar">
+					<input type="radio" name="informedAlgorithm-aStar" value="aStar">
+					<span>A*</span>
+				</label>
+
+				<button type="submit">Ejecutar algoritmo</button>
+			</form>
+		</div>
+		
+	</section>
+
 	<script src="./script.js"></script>
 </body>
 </html>
