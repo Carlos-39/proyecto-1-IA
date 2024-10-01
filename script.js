@@ -76,4 +76,73 @@ function renderMatrix(matrix) {
 
 	// añadir la tabla al contenedor
 	mapContainer.appendChild(table)
+
+	// mostrar la sección de selección del algoritmo
+	const algorithmContainer = document.querySelector('.main-algorithm-container')
+	algorithmContainer.classList.remove('invisible')
+	algorithmContainer.classList.add('visible')
+}
+
+// Manejador de selección del algoritmo y su tipo de búsqueda
+document.getElementById('algorithmTypeForm').addEventListener('change', () => {
+	// traer el valor que el usuario seleccione
+	const selectedType = document.querySelector('input[name="searchType"]:checked').value
+	
+	// Mostrar las opciones dependiendo de la elección
+	if (selectedType === 'uninformed') {
+		document.getElementById('uninformedOptions').classList.remove('invisible');
+        document.getElementById('uninformedOptions').classList.add('visible');
+        document.getElementById('informedOptions').classList.remove('visible');
+        document.getElementById('informedOptions').classList.add('invisible');
+	} else if (selectedType === 'informed') {
+		document.getElementById('informedOptions').classList.remove('invisible');
+        document.getElementById('informedOptions').classList.add('visible');
+        document.getElementById('uninformedOptions').classList.remove('visible');
+        document.getElementById('uninformedOptions').classList.add('invisible');
+	}
+})
+
+// Manejador de la ejecución de algoritmos de búsqueda no informada
+document.getElementById('uninformedAlgorithmForm').addEventListener('submit', (event) => {
+	event.preventDefault();
+	
+	// algoritmo seleccionado
+	const selectedAlgorithm = document.querySelector('input[name="uninformedAlgorithm"]:checked').value
+
+	console.log("Algoritmo de búsqueda no informada: ", selectedAlgorithm)
+
+	executeAlgorithm(selectedAlgorithm);
+})
+
+// Manejador de la ejecución de algoritmos de búsqueda informada
+document.getElementById('informedAlgorithmForm').addEventListener('submit', (event) => {
+	event.preventDefault();
+	
+	// algoritmo seleccionado
+	const selectedAlgorithm = document.querySelector('input[name="informedAlgorithm"]:checked').value
+
+	console.log("Algoritmo de búsqueda informada: ", selectedAlgorithm)
+
+	executeAlgorithm(selectedAlgorithm);
+})
+
+// función para ejecutar el algoritmo seleccionado
+function executeAlgorithm(algorithm) {
+	switch (algorithm) {
+		case 'amplitud':
+			console.log("Ejecutando amplitud")
+			break;
+		case 'costoUniforme':
+			console.log("Ejecutando costo uniforme")
+			break;
+		case 'profundidad':
+			console.log("Ejecutando profundidad")
+			break;
+		case 'avara':
+			console.log("Ejecutando avara")
+			break;
+		case 'AStar':
+			console.log("Ejecutando A*")
+			break;
+	}
 }
