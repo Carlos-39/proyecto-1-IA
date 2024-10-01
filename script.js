@@ -76,4 +76,28 @@ function renderMatrix(matrix) {
 
 	// añadir la tabla al contenedor
 	mapContainer.appendChild(table)
+
+	// mostrar la sección de selección del algoritmo
+	const algorithmContainer = document.querySelector('.main-algorithm-container')
+	algorithmContainer.classList.remove('invisible')
+	algorithmContainer.classList.add('visible')
 }
+
+// Manejador de selección del algoritmo y su tipo de búsqueda
+document.getElementById('algorithmTypeForm').addEventListener('change', () => {
+	// traer el valor que el usuario seleccione
+	const selectedType = document.querySelector('input[name="searchType"]:checked').value
+	
+	// Mostrar las opciones dependiendo de la elección
+	if (selectedType === 'uninformed') {
+		document.getElementById('uninformedOptions').classList.remove('invisible');
+        document.getElementById('uninformedOptions').classList.add('visible');
+        document.getElementById('informedOptions').classList.remove('visible');
+        document.getElementById('informedOptions').classList.add('invisible');
+	} else if (selectedType === 'informed') {
+		document.getElementById('informedOptions').classList.remove('invisible');
+        document.getElementById('informedOptions').classList.add('visible');
+        document.getElementById('uninformedOptions').classList.remove('visible');
+        document.getElementById('uninformedOptions').classList.add('invisible');
+	}
+})

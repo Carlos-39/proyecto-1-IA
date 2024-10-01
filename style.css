@@ -2,13 +2,16 @@
 :root{
 	/* colores del mapa */
 	--color-muro: #222831;
-	--color-traficoMedio: #80ed99;
-	--color-traficoPesado: #E84545;
-	--color-pasajero: #BC6FF1;
-	--color-destino: #FFABAB;
-	--color-inicio: #F9ED69;
-	--color-light: #ffffff;
+	--color-traficoMedio: linear-gradient(90deg, #c7f2ff,#5cd3ff);
+	--color-traficoPesado: linear-gradient(90deg, #d82b56,#be264c,#920c2d);
+	--color-pasajero: linear-gradient(90deg, #e292fe,#be38f3,#7a219e);;
+	--color-destino: linear-gradient(90deg, #20a82f,#52cb54,#7aef78); 
+	--color-inicio: linear-gradient(90deg, #fbd309,#f3a119);;
+	--color-light: linear-gradient(90deg, #eae9f6,#ebebeb);
+	--color-muro-mejorado: linear-gradient(90deg, #09090c,#1a1b23);
 }
+
+/* background: -webkit-linear-gradient(90deg, #2c3d48,#3f2016,#2a3552); */
 
 /* Estilos base a todos los contenedores */
 * {
@@ -24,14 +27,15 @@ html{
 }
 
 /* Colores para cada tipo de celda */
-.elemento-0 { background-color: var(--color-light); } /* tráfico liviano */
-.elemento-1 { background-color: var(--color-muro); } /* muro */
-.elemento-2 { background-color: var(--color-inicio); } /* punto de partida */
-.elemento-3 { background-color: var(--color-traficoMedio); } /* tráfico medio */
-.elemento-4 { background-color: var(--color-traficoPesado); } /* tráfico pesado */
-.elemento-5 { background-color: var(--color-pasajero); } /* pasajero */
-.elemento-6 { background-color: var(--color-destino); } /* destino */
+.elemento-0 { background: var(--color-light); } /* tráfico liviano */
+.elemento-1 { background: var(--color-muro-mejorado); } /* muro */
+.elemento-2 { background: var(--color-inicio); } /* punto de partida */
+.elemento-3 { background: var(--color-traficoMedio); } /* tráfico medio */
+.elemento-4 { background: var(--color-traficoPesado); } /* tráfico pesado */
+.elemento-5 { background: var(--color-pasajero); } /* pasajero */
+.elemento-6 { background: var(--color-destino); } /* destino */
 
+/* Estilos del header */
 .header-container{
 	display: flex;
 	flex-direction: column;
@@ -56,7 +60,7 @@ html{
 	font-size: 5rem;
 	font-weight: bold;
 	line-height: 2.6rem;
-	color: var(--color-light);
+	color: #ffffff;
 }
 
 .header-container .header--title-container p{
@@ -64,9 +68,10 @@ html{
 	font-size: 1.4rem;
 	font-weight: 500;
 	line-height: 2rem;
-	color: var(--color-light);
+	color: #ffffff;
 }
 
+/* Estilos del botón de carga del mapa */
 .form-container{
 	display: flex;
 	margin: 0 auto;
@@ -99,7 +104,7 @@ html{
 
 .form-container .form-container--info span{
 	font-size: 1.6rem;
-	color: var(--color-light);
+	color: #ffffff;
 	cursor: pointer;
 }
 
@@ -132,4 +137,208 @@ html{
 .form-container.encoger {
     margin-top: 0;
     transition: margin-top 0.5s ease;
+}
+
+/* Estilos de la sección principal */
+.main-section-container{
+	display: flex;
+	/* justify-content: space-between;
+	align-items: flex-start; */
+	align-items: center;
+	width: 90%;
+	margin: 20px auto;
+	/* margin-top: 20px; */
+	padding: 10px;
+}
+
+/* Estilos de la tabla (mapa) */
+.main-section-container .main-map-container{
+	width: 70%;
+}
+
+.main-section-container .main-map-container table{
+	border-collapse: collapse;
+    /* margin-top: 20px; */
+	/* margin-bottom: 40px; */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.main-section-container .main-map-container table td{
+	width: 60px;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000;
+}
+
+.main-section-container .main-algorithm-container{
+	width: 25%;
+	margin: 5px auto;
+}
+
+/* estilos para la sección de escoger el algoritmo */
+.visible{
+	display: block;
+}
+
+.invisible{
+	display: none;
+}
+
+.main-algorithm--type-container{
+	width: 100%;
+	height: 200px;
+	padding: 6px;
+	/* border: 1px solid #ccc; */
+}
+
+.main-algorithm--type-container h3{
+	font-size: 1.6rem;
+	text-align: center;
+	margin-bottom: 35px;
+	line-height: 1.8rem;
+	font-weight: bold;
+	border: 1px solid #ccc;
+	padding: 6px;
+	border-radius: 12px;
+	background: -webkit-linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	color: #fff;
+}
+
+.main-algorithm--type-container .algorithm-type--form{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.main-algorithm--type-container .algorithm-type--form label{
+	display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    /* font-size: 1.6rem; */
+    margin-bottom: 20px;
+	padding-left: 40px;
+}
+
+.main-algorithm--type-container .algorithm-type--form label span{
+	font-size: 1.6rem;
+	font-weight: 500;
+	margin-left: 10px;
+}
+
+.main-algorithm--uninformed-container{
+	width: 100%;
+	height: 200px;
+	padding: 6px;
+}
+
+.main-algorithm--uninformed-container h4{
+	font-size: 1.6rem;
+	text-align: center;
+	margin-bottom: 35px;
+	line-height: 1.8rem;
+	font-weight: bold;
+	border: 1px solid #ccc;
+	padding: 6px;
+	border-radius: 12px;
+	background: -webkit-linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	color: #fff;
+}
+
+.main-algorithm--uninformed-container .algorithm-uninformed--form{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.main-algorithm--uninformed-container .algorithm-uninformed--form label{
+	display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    /* font-size: 1.6rem; */
+    margin-bottom: 20px;
+	padding-left: 40px;
+}
+
+.main-algorithm--uninformed-container .algorithm-uninformed--form label span{
+	font-size: 1.6rem;
+	font-weight: 500;
+	margin-left: 10px;
+}
+
+.main-algorithm--uninformed-container .algorithm-uninformed--form button {
+	width: 60%;
+	margin: 0 auto;
+	padding: 9px;
+	border-radius: 12px;
+	cursor: pointer;
+	font-size: 1.4rem;
+	border: none;
+	background: -webkit-linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	color: #fff;
+	font-weight: bold;
+}
+
+.main-algorithm--informed-container{
+	width: 100%;
+	height: 200px;
+	padding: 6px;
+}
+
+.main-algorithm--informed-container h4{
+	font-size: 1.6rem;
+	text-align: center;
+	margin-bottom: 35px;
+	line-height: 1.8rem;
+	font-weight: bold;
+	border: 1px solid #ccc;
+	padding: 6px;
+	border-radius: 12px;
+	background: -webkit-linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	color: #fff;
+}
+
+.main-algorithm--informed-container .algorithm-informed--form{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.main-algorithm--informed-container .algorithm-informed--form label{
+	display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    /* font-size: 1.6rem; */
+    margin-bottom: 20px;
+	padding-left: 40px;
+}
+
+.main-algorithm--informed-container .algorithm-informed--form label span{
+	font-size: 1.6rem;
+	font-weight: 500;
+	margin-left: 10px;
+}
+
+.main-algorithm--informed-container .algorithm-informed--form button {
+	width: 60%;
+	margin: 0 auto;
+	padding: 9px;
+	border-radius: 12px;
+	cursor: pointer;
+	font-size: 1.4rem;
+	border: none;
+	background: -webkit-linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
+	color: #fff;
+	font-weight: bold;
 }
