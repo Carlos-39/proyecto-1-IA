@@ -101,3 +101,48 @@ document.getElementById('algorithmTypeForm').addEventListener('change', () => {
         document.getElementById('uninformedOptions').classList.add('invisible');
 	}
 })
+
+// Manejador de la ejecución de algoritmos de búsqueda no informada
+document.getElementById('uninformedAlgorithmForm').addEventListener('submit', (event) => {
+	event.preventDefault();
+	
+	// algoritmo seleccionado
+	const selectedAlgorithm = document.querySelector('input[name="uninformedAlgorithm"]:checked').value
+
+	console.log("Algoritmo de búsqueda no informada: ", selectedAlgorithm)
+
+	executeAlgorithm(selectedAlgorithm);
+})
+
+// Manejador de la ejecución de algoritmos de búsqueda informada
+document.getElementById('informedAlgorithmForm').addEventListener('submit', (event) => {
+	event.preventDefault();
+	
+	// algoritmo seleccionado
+	const selectedAlgorithm = document.querySelector('input[name="informedAlgorithm"]:checked').value
+
+	console.log("Algoritmo de búsqueda informada: ", selectedAlgorithm)
+
+	executeAlgorithm(selectedAlgorithm);
+})
+
+// función para ejecutar el algoritmo seleccionado
+function executeAlgorithm(algorithm) {
+	switch (algorithm) {
+		case 'amplitud':
+			console.log("Ejecutando amplitud")
+			break;
+		case 'costoUniforme':
+			console.log("Ejecutando costo uniforme")
+			break;
+		case 'profundidad':
+			console.log("Ejecutando profundidad")
+			break;
+		case 'avara':
+			console.log("Ejecutando avara")
+			break;
+		case 'AStar':
+			console.log("Ejecutando A*")
+			break;
+	}
+}
