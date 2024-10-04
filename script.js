@@ -1,6 +1,9 @@
 // Leer archivo txt de la entrada
 document.getElementById('fileInput').addEventListener('change', handleFileUpload)
 
+let matrix = []; // Variable para almacenar la matriz
+let start, passenger, destination; // Variables para almacenar posiciones
+
 // función que maneja el evento que dispara la carga del archivo
 function handleFileUpload(event) {
 	// Obtener el txt
@@ -9,6 +12,7 @@ function handleFileUpload(event) {
 	// validar que sea txt el archivo
 	if (!file || !file.name.endsWith('.txt')) {
 		alert('Por favor selecciona un archivo .txt valido')
+		return
 	}
 
 	// leer el txt
@@ -18,7 +22,7 @@ function handleFileUpload(event) {
 		const content = e.target.result
 		
 		// convertir el txt en matriz
-		const matrix = parseFileUpload(content)
+		matrix = parseFileUpload(content)
 		console.log(matrix)
 
 		// renderizar la matriz en el DOM
@@ -30,6 +34,15 @@ function handleFileUpload(event) {
 		document.querySelector('h1')
 		document.querySelector('.header--info').classList.add('invisible')
         document.querySelector('.form-container').classList.add('encoger');
+
+		// Encontrar las posiciones del vehículo, pasajero y destino
+        start = findPosition(matrix, 2); // Posición del vehículo
+        passenger = findPosition(matrix, 5); // Posición del pasajero
+        destination = findPosition(matrix, 6); // Posición del destino
+
+        if (!start || !passenger || !destination) {
+            console.log("No se encontraron las posiciones requeridas.");
+        }
 	}
 
 	// iniciar la lectura del archivo
@@ -40,6 +53,18 @@ function handleFileUpload(event) {
 function parseFileUpload(content) {
 	// Divide el contenido del archivo por líneas y luego por espacios
     return content.trim().split('\n').map(line => line.split(' ').map(Number));
+}
+
+// función para encontrar la posición de un valor en la matriz
+function findPosition(matrix, value) {
+    for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+            if (matrix[i][j] === value) {
+                return { x: i, y: j }; // Retorna la posición como objeto
+            }
+        }
+    }
+    return null; // Retorna null si no se encuentra el valor
 }
 
 // función para renderizar la matriz en el DOM
