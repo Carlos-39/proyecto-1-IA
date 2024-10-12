@@ -1,4 +1,5 @@
 import { MapState } from './map.js'
+import { breadthFirstSearch } from './bfs.js'; // Asegúrate de importar la función
 
 // Instancia de la clase para manejar el estado del mapa
 const mapState = new MapState();
@@ -143,6 +144,11 @@ function executeAlgorithm(algorithm) {
 	switch (algorithm) {
 		case 'amplitud':
 			console.log("Ejecutando amplitud")
+			const initialState = new MapState();
+            initialState.matrix = mapState.getMatrix(); // Usar la matriz actual
+            initialState.initializePositions(); // Inicializar posiciones
+            const path = breadthFirstSearch(initialState); // Llamar a BFS
+            console.log("Camino encontrado:", path);
 			break;
 		case 'costoUniforme':
 			console.log("Ejecutando costo uniforme")
