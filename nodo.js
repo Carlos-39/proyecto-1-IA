@@ -11,14 +11,18 @@ export class Nodo {
     	* @param {number} costo - El costo acumulado de llegar al nodo
     	* @param {number|null} heuristica - El valor de la heurística
      */
-	constructor(estado, padre = null, operador = null, profundidad = 0, costo = 0, heuristica = null){
+	constructor(estado, padre = null, operador = null, profundidad = 0, costo = 0, heuristica = null, tienePasajero = false){
 		this.estado = estado
 		this.padre = padre
 		this.operador = operador
 		this.profundidad = profundidad
 		this.costo = costo
-		this.heuristica = heuristica
+		this.heuristica = heuristica,
+		this.tienePasajero = tienePasajero
 	}
+
+	// Estático para contar nodos expandidos
+	static nodosExpandidos = 0;
 
 	// compara dos nodos para ver si son iguales (mismo estado)
 	isEqualTo(node){
@@ -28,7 +32,7 @@ export class Nodo {
 	// Verifica si el nodo es el nodo meta
     esMeta() {
         const { start, destination } = this.estado.getPositions();
-		return JSON.stringify(start) === JSON.stringify(destination);
+		return JSON.stringify(start) === JSON.stringify(destination) && this.tienePasajero;
     }
 
 	// Aplica un operador y retorna un nuevo nodo con el estado actualizado
@@ -44,6 +48,7 @@ export class Nodo {
 
     	// Aplicar movimiento dependiendo del operador (0 = arriba, 1 = derecha, 2 = abajo, 3 = izquierda)
     	let nuevoX = x, nuevoY = y;
+
     	switch (operador) {
     	    case 0: nuevoX = x - 1; break; // arriba
     	    case 1: nuevoY = y + 1; break; // derecha
@@ -60,8 +65,17 @@ export class Nodo {
     	    nuevoEstado.start = [nuevoX, nuevoY];
     	    nuevoEstado.matrix[nuevoX][nuevoY] = 2;  // 2 representa el vehículo
 
-    	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + 1);
-    	}
+			let tienePasajero = this.tienePasajero;
+
+			// Si el vehículo llega a la posición del pasajero, actualizamos el estado
+			if (JSON.stringify(nuevoEstado.start) === JSON.stringify(nuevoEstado.passenger)) {
+				tienePasajero = true;
+			}
+
+			console.log(`Posición actual del vehículo: ${JSON.stringify(nuevoEstado.start)}, Posición del pasajero: ${JSON.stringify(nuevoEstado.passenger)}, ¿Tiene pasajero? ${tienePasajero}`);
+
+    	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + 1, tienePasajero);
+		}
 
     	return null; // Si el movimiento no es válido, no se genera un nuevo nodo
 	}
@@ -82,4 +96,9 @@ export class Nodo {
         }
         return movimientos;
     }
+
+	// Al expandir un nodo, incrementa el contador
+	expandir() {
+		Nodo.nodosExpandidos++; // Incrementar el contador de nodos expandidos
+	}
 }
