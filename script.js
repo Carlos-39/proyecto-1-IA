@@ -1,5 +1,6 @@
 import { MapState } from './map.js'
-import { breadthFirstSearch } from './bfs.js'; // Asegúrate de importar la función
+import { breadthFirstSearch } from './bfs.js'; 
+import { depthFirstSearch } from './dfs.js'; 
 
 // Instancia de la clase para manejar el estado del mapa
 const mapState = new MapState();
@@ -154,6 +155,12 @@ function executeAlgorithm(algorithm) {
 			console.log("Ejecutando costo uniforme")
 			break;
 		case 'profundidad':
+			console.log("Ejecutando profundidad");
+            const initialStateDFS = new MapState();
+            initialStateDFS.matrix = mapState.getMatrix(); // Usar la matriz actual
+            initialStateDFS.initializePositions(); // Inicializar posiciones
+            const pathDFS = depthFirstSearch(initialStateDFS); // Llamar a DFS
+            console.log("Camino encontrado:", pathDFS);
 			console.log("Ejecutando profundidad")
 			break;
 		case 'avara':
