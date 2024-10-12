@@ -1,25 +1,25 @@
 import { Nodo } from './nodo.js';
 import { MapState } from './map.js';
 
-export function breadthFirstSearch(initialState) {
-    // Cola para los nodos por explorar
-    const queue = [];
+export function profundidad(initialState) {
+    // Pila para los nodos por explorar
+    const stack = [];
     const explored = new Set(); // Conjunto para almacenar nodos explorados
-	let profundidadMaxima = 0; // Profundidad máxima del árbol
+    let profundidadMaxima = 0; // Profundidad máxima del árbol
 
-    // Crear el nodo inicial y añadirlo a la cola
+    // Crear el nodo inicial y añadirlo a la pila
     const initialNode = new Nodo(initialState);
-    queue.push(initialNode);
+    stack.push(initialNode);
 
-    while (queue.length > 0) {
-        const currentNode = queue.shift(); // Sacar el primer nodo de la cola
-		currentNode.expandir(); // Incrementar el contador de nodos expandidos
+    while (stack.length > 0) {
+        const currentNode = stack.pop(); // Sacar el último nodo de la pila
+        currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
-			console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
-			console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
-			console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`)
+            console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
+            console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
+            console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`);
             console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
@@ -41,7 +41,7 @@ export function breadthFirstSearch(initialState) {
                 position: childNode.estado.getPositions().start,
                 tienePasajero: childNode.tienePasajero
             }))) {
-                queue.push(childNode);
+                stack.push(childNode); // Agregar el nodo hijo a la pila
                 explored.add(JSON.stringify({
                     position: childNode.estado.getPositions().start,
                     tienePasajero: childNode.tienePasajero
@@ -49,13 +49,13 @@ export function breadthFirstSearch(initialState) {
             }
         }
 
-		// Actualizar la profundidad máxima
-		if (currentNode.profundidad > profundidadMaxima) {
-			profundidadMaxima = currentNode.profundidad;
-		}
+        // Actualizar la profundidad máxima
+        if (currentNode.profundidad > profundidadMaxima) {
+            profundidadMaxima = currentNode.profundidad;
+        }
     }
 
-	console.log(`No se encontró solución. Profundidad máxima alcanzada: ${profundidadMaxima}`); // Imprimir si no hay solución
+    console.log(`No se encontró solución. Profundidad máxima alcanzada: ${profundidadMaxima}`); // Imprimir si no hay solución
     return []; // Si no se encuentra solución, retornar vacío
 }
 

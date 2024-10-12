@@ -1,5 +1,16 @@
 import { MapState } from './map.js';
 
+// Costos de movimiento
+const costos = {
+    0: 1,  // tráfico liviano
+    1: Infinity, // muro (no se puede atravesar)
+    2: 0,  // posición del vehículo (costo inicial)
+    3: 4,  // tráfico medio
+    4: 7,  // tráfico pesado
+    5: 1,  // pasajero
+    6: 1   // destino
+};
+
 // constructor del nodo
 export class Nodo {
 	/**
@@ -58,6 +69,9 @@ export class Nodo {
 
     	// Validar si el movimiento es posible
     	if (this.esMovimientoValido(nuevoX, nuevoY)) {
+			// Calcula el costo de movimiento a la nueva posición
+			const costoMovimiento = costos[nuevoEstado.matrix[nuevoX][nuevoY]];
+
     	    // Actualizar la matriz: quitar la antigua posición del vehículo
     	    nuevoEstado.matrix[x][y] = 0;  // 0 es celda vacía
 
@@ -72,9 +86,12 @@ export class Nodo {
 				tienePasajero = true;
 			}
 
-			console.log(`Posición actual del vehículo: ${JSON.stringify(nuevoEstado.start)}, Posición del pasajero: ${JSON.stringify(nuevoEstado.passenger)}, ¿Tiene pasajero? ${tienePasajero}`);
+			console.log(`Posición del vehículo: [${x}, ${y}]`);
+			console.log(`Nueva posición: [${nuevoX}, ${nuevoY}]`);
+			console.log(`Costo acumulado antes del movimiento: ${this.costo}`);
+			console.log(`Costo del movimiento: ${costoMovimiento}`);
 
-    	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + 1, null, tienePasajero);
+    	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + costoMovimiento, null, tienePasajero);
 		}
 
     	return null; // Si el movimiento no es válido, no se genera un nuevo nodo

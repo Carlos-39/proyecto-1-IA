@@ -1,5 +1,7 @@
 import { MapState } from './map.js'
-import { breadthFirstSearch } from './bfs.js'; // Asegúrate de importar la función
+import { profundidad } from './profundidad.js'; 
+import { amplitud } from './amplitud.js';
+import { costoUniforme } from './costo.js';
 
 // Instancia de la clase para manejar el estado del mapa
 const mapState = new MapState();
@@ -144,17 +146,27 @@ function executeAlgorithm(algorithm) {
 	switch (algorithm) {
 		case 'amplitud':
 			console.log("Ejecutando amplitud")
-			const initialState = new MapState();
-            initialState.matrix = mapState.getMatrix(); // Usar la matriz actual
-            initialState.initializePositions(); // Inicializar posiciones
-            const path = breadthFirstSearch(initialState); // Llamar a BFS
-            console.log("Camino encontrado:", path);
+			const initialStateAmp = new MapState();
+            initialStateAmp.matrix = mapState.getMatrix(); // Usar la matriz actual
+            initialStateAmp.initializePositions(); // Inicializar posiciones
+            const pathAmp = amplitud(initialStateAmp); // Llamar al algoritmo de amplitud
+            console.log("Camino encontrado:", pathAmp);
 			break;
 		case 'costoUniforme':
 			console.log("Ejecutando costo uniforme")
+			const initialStateCost = new MapState();
+            initialStateCost.matrix = mapState.getMatrix(); // Usar la matriz actual
+            initialStateCost.initializePositions(); // Inicializar posiciones
+            const pathCost = costoUniforme(initialStateCost); // Llamar al algoritmo de amplitud
+            console.log("Camino encontrado:", pathCost);
 			break;
 		case 'profundidad':
-			console.log("Ejecutando profundidad")
+			console.log("Ejecutando profundidad");
+            const initialStateProf = new MapState();
+            initialStateProf.matrix = mapState.getMatrix(); // Usar la matriz actual
+            initialStateProf.initializePositions(); // Inicializar posiciones
+            const pathProf = profundidad(initialStateProf); // Llamar al algoritmo de profundidad
+            console.log("Camino encontrado:", pathProf);
 			break;
 		case 'avara':
 			console.log("Ejecutando avara")
