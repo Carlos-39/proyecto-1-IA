@@ -16,7 +16,7 @@ export class MapState {
 		for (let i = 0; i < this.matrix.length; i++) {
 			for (let j = 0; j < this.matrix[i].length; j++) {
 				if (this.matrix[i][j] === value) {
-					return { x: i, y: j }; // Retorna la posición como objeto
+					return [i, j]; // Retorna la posición como tupla [x,y]
 				}
 			}
 		}
@@ -37,6 +37,10 @@ export class MapState {
 
 	// Obtener la posición del vehículo, pasajero, y destino
     getPositions() {
-        return { start: this.start, passenger: this.passenger, destination: this.destination };
+        return {
+			start: this.start,
+			passenger: this.passenger,
+			destination: this.destination
+		};
     }
 }
