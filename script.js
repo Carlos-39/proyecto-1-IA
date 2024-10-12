@@ -1,3 +1,8 @@
+import { MapState } from './map.js'
+
+// Instancia de la clase para manejar el estado del mapa
+const mapState = new MapState();
+
 // Leer archivo txt de la entrada
 document.getElementById('fileInput').addEventListener('change', handleFileUpload)
 
@@ -9,6 +14,7 @@ function handleFileUpload(event) {
 	// validar que sea txt el archivo
 	if (!file || !file.name.endsWith('.txt')) {
 		alert('Por favor selecciona un archivo .txt valido')
+		return
 	}
 
 	// leer el txt
@@ -18,11 +24,14 @@ function handleFileUpload(event) {
 		const content = e.target.result
 		
 		// convertir el txt en matriz
-		const matrix = parseFileUpload(content)
-		console.log(matrix)
+		mapState.parseFileUpload(content)
+		console.log(mapState.getMatrix())
+
+		// Inicializar posiciones del vehículo, pasajero y destino
+        mapState.initializePositions()
 
 		// renderizar la matriz en el DOM
-		renderMatrix(matrix)
+		renderMatrix(mapState.getMatrix())
 
 		// Cambiar el tamaño del header para ajustar la tabla
         document.querySelector('.header-container').classList.add('encoger');
@@ -30,16 +39,19 @@ function handleFileUpload(event) {
 		document.querySelector('h1')
 		document.querySelector('.header--info').classList.add('invisible')
         document.querySelector('.form-container').classList.add('encoger');
+
+		// Acceder a las posiciones del vehículo, pasajero, y destino
+        const { start, passenger, destination } = mapState.getPositions();
+
+        if (!start || !passenger || !destination) {
+            console.log("No se encontraron las posiciones requeridas.");
+        } else {
+            console.log("Vehículo:", start, "Pasajero:", passenger, "Destino:", destination);
+        }
 	}
 
 	// iniciar la lectura del archivo
 	reader.readAsText(file)
-}
-
-// función que convierte el txt a matriz
-function parseFileUpload(content) {
-	// Divide el contenido del archivo por líneas y luego por espacios
-    return content.trim().split('\n').map(line => line.split(' ').map(Number));
 }
 
 // función para renderizar la matriz en el DOM
