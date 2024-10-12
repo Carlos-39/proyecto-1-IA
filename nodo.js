@@ -74,7 +74,7 @@ export class Nodo {
 
 			console.log(`Posición actual del vehículo: ${JSON.stringify(nuevoEstado.start)}, Posición del pasajero: ${JSON.stringify(nuevoEstado.passenger)}, ¿Tiene pasajero? ${tienePasajero}`);
 
-    	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + 1, tienePasajero);
+    	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + 1, null, tienePasajero);
 		}
 
     	return null; // Si el movimiento no es válido, no se genera un nuevo nodo
