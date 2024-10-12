@@ -1,7 +1,7 @@
 import { Nodo } from './nodo.js';
 import { MapState } from './map.js';
 
-export function depthFirstSearch(initialState) {
+export function profundidad(initialState) {
     // Pila para los nodos por explorar
     const stack = [];
     const explored = new Set(); // Conjunto para almacenar nodos explorados

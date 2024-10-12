@@ -1,5 +1,5 @@
 import { MapState } from './map.js'
-import { depthFirstSearch } from './dfs.js'; 
+import { profundidad } from './profundidad.js'; 
 import { amplitud } from './amplitud.js';
 import { costoUniforme } from './costo.js';
 
@@ -162,12 +162,11 @@ function executeAlgorithm(algorithm) {
 			break;
 		case 'profundidad':
 			console.log("Ejecutando profundidad");
-            const initialStateDFS = new MapState();
-            initialStateDFS.matrix = mapState.getMatrix(); // Usar la matriz actual
-            initialStateDFS.initializePositions(); // Inicializar posiciones
-            const pathDFS = depthFirstSearch(initialStateDFS); // Llamar a DFS
-            console.log("Camino encontrado:", pathDFS);
-			console.log("Ejecutando profundidad")
+            const initialStateProf = new MapState();
+            initialStateProf.matrix = mapState.getMatrix(); // Usar la matriz actual
+            initialStateProf.initializePositions(); // Inicializar posiciones
+            const pathProf = profundidad(initialStateProf); // Llamar al algoritmo de profundidad
+            console.log("Camino encontrado:", pathProf);
 			break;
 		case 'avara':
 			console.log("Ejecutando avara")
