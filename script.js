@@ -1,8 +1,10 @@
+import { MapState } from './map.js'
+
+// Instancia de la clase para manejar el estado del mapa
+const mapState = new MapState();
+
 // Leer archivo txt de la entrada
 document.getElementById('fileInput').addEventListener('change', handleFileUpload)
-
-let matrix = []; // Variable para almacenar la matriz
-let start, passenger, destination; // Variables para almacenar posiciones
 
 // función que maneja el evento que dispara la carga del archivo
 function handleFileUpload(event) {
@@ -22,11 +24,14 @@ function handleFileUpload(event) {
 		const content = e.target.result
 		
 		// convertir el txt en matriz
-		matrix = parseFileUpload(content)
-		console.log(matrix)
+		mapState.parseFileUpload(content)
+		console.log(mapState.getMatrix())
+
+		// Inicializar posiciones del vehículo, pasajero y destino
+        mapState.initializePositions()
 
 		// renderizar la matriz en el DOM
-		renderMatrix(matrix)
+		renderMatrix(mapState.getMatrix())
 
 		// Cambiar el tamaño del header para ajustar la tabla
         document.querySelector('.header-container').classList.add('encoger');
@@ -35,36 +40,18 @@ function handleFileUpload(event) {
 		document.querySelector('.header--info').classList.add('invisible')
         document.querySelector('.form-container').classList.add('encoger');
 
-		// Encontrar las posiciones del vehículo, pasajero y destino
-        start = findPosition(matrix, 2); // Posición del vehículo
-        passenger = findPosition(matrix, 5); // Posición del pasajero
-        destination = findPosition(matrix, 6); // Posición del destino
+		// Acceder a las posiciones del vehículo, pasajero, y destino
+        const { start, passenger, destination } = mapState.getPositions();
 
         if (!start || !passenger || !destination) {
             console.log("No se encontraron las posiciones requeridas.");
+        } else {
+            console.log("Vehículo:", start, "Pasajero:", passenger, "Destino:", destination);
         }
 	}
 
 	// iniciar la lectura del archivo
 	reader.readAsText(file)
-}
-
-// función que convierte el txt a matriz
-function parseFileUpload(content) {
-	// Divide el contenido del archivo por líneas y luego por espacios
-    return content.trim().split('\n').map(line => line.split(' ').map(Number));
-}
-
-// función para encontrar la posición de un valor en la matriz
-function findPosition(matrix, value) {
-    for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length; j++) {
-            if (matrix[i][j] === value) {
-                return { x: i, y: j }; // Retorna la posición como objeto
-            }
-        }
-    }
-    return null; // Retorna null si no se encuentra el valor
 }
 
 // función para renderizar la matriz en el DOM
