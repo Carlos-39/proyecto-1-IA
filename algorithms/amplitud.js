@@ -11,16 +11,21 @@ export function amplitud(initialState) {
     const initialNode = new Nodo(initialState);
     queue.push(initialNode);
 
+    // Tiempo de inicio
+    const startTime = performance.now();
+
     while (queue.length > 0) {
         const currentNode = queue.shift(); // Sacar el primer nodo de la cola
 		currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
-			console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
-			console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
-			console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`)
-            console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
+            const endTime = performance.now(); // Tiempo de fin de la búsqueda
+            console.log('Termino la búsqueda')
+			console.log(`Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`);
+			console.log(`Profundidad del nodo meta encontrado: ${currentNode.profundidad}`);
+			console.log(`Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`)
+            console.log(`Tiempo de cómputo: ${(endTime - startTime).toFixed(2)} ms`)
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 
