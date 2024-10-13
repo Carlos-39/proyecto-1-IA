@@ -2,20 +2,18 @@ import { Nodo } from './nodo.js';
 import { MapState } from './map.js';
 
 export function profundidad(initialState) {
-    // Pila para los nodos por explorar
     const stack = [];
-    const explored = new Set(); // Conjunto para almacenar nodos explorados
-    let profundidadMaxima = 0; // Profundidad máxima del árbol
+    const explored = new Set();
+    let profundidadMaxima = 0;
 
-    // Crear el nodo inicial y añadirlo a la pila
     const initialNode = new Nodo(initialState);
     stack.push(initialNode);
 
     while (stack.length > 0) {
-        const currentNode = stack.pop(); // Sacar el último nodo de la pila
-        currentNode.expandir(); // Incrementar el contador de nodos expandidos
+        const currentNode = stack.shift(); 
+        currentNode.expandir();
 
-        // Verificar si es el nodo meta
+        // Verifica si es el nodo meta
         if (currentNode.esMeta()) {
             console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
             console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
@@ -24,39 +22,48 @@ export function profundidad(initialState) {
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 
-        // Marcar el nodo como explorado
-        explored.add(JSON.stringify({
+        // Marca el nodo como explorado
+        const estadoActual = JSON.stringify({
             position: currentNode.estado.getPositions().start,
             tienePasajero: currentNode.tienePasajero
-        }));
+        });
+        explored.add(estadoActual);
 
-        // Obtener los movimientos posibles desde el nodo actual
-        const movements = currentNode.posiblesMovimientos();
+        // Obtener movimientos posibles y ordenarlos
+        let movements = currentNode.posiblesMovimientos();
+        movements.sort((a, b) => ['arriba', 'abajo', 'izquierda', 'derecha'].indexOf(a) - ['arriba', 'abajo', 'izquierda', 'derecha'].indexOf(b));
 
-        for (const move of movements) {
-            const childNode = currentNode.aplicarOperador(move); // Aplicar el operador
-
-            // Verificar si el nodo hijo no ha sido explorado
-            if (childNode && !explored.has(JSON.stringify({
-                position: childNode.estado.getPositions().start,
-                tienePasajero: childNode.tienePasajero
-            }))) {
-                stack.push(childNode); // Agregar el nodo hijo a la pila
-                explored.add(JSON.stringify({
+        for (let move of movements) {
+            const childNode = currentNode.aplicarOperador(move);
+            if (childNode) {
+                const estadoHijo = JSON.stringify({
                     position: childNode.estado.getPositions().start,
                     tienePasajero: childNode.tienePasajero
-                }));
+                });
+
+                if (!explored.has(estadoHijo)) {
+                    // Evitar ciclos
+                    // if (!childNode.tienePasajero || !explored.has(JSON.stringify({
+                    //     position: childNode.estado.getPositions().start,
+                    //     tienePasajero: true
+                    // }))) {
+                    //     stack.push(childNode);
+                    //     explored.add(estadoHijo);
+                    // }
+                    stack.push(childNode);
+                    explored.add(estadoHijo);
+                }
             }
         }
 
-        // Actualizar la profundidad máxima
+        // Actualiza la profundidad máxima
         if (currentNode.profundidad > profundidadMaxima) {
             profundidadMaxima = currentNode.profundidad;
         }
     }
 
-    console.log(`No se encontró solución. Profundidad máxima alcanzada: ${profundidadMaxima}`); // Imprimir si no hay solución
-    return []; // Si no se encuentra solución, retornar vacío
+    console.log(`No se encontró solución. Profundidad máxima alcanzada: ${profundidadMaxima}`);
+    return [];
 }
 
 // Función para construir el camino hacia la meta
@@ -64,9 +71,9 @@ function constructPath(node) {
     const path = [];
     let currentNode = node;
 
-    // Recorrer hacia atrás desde el nodo meta hasta el inicial
     while (currentNode) {
-        path.push(currentNode.estado.getPositions().start); // Añadir la posición del nodo
+        const position = currentNode.estado.getPositions().start; // Obtener posición del nodo
+        path.push(position);
         currentNode = currentNode.padre; // Subir al nodo padre
     }
 
