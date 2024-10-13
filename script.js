@@ -3,6 +3,7 @@ import { profundidad } from './profundidad.js';
 import { amplitud } from './amplitud.js';
 import { costoUniforme } from './costo.js';
 import { avara } from './avara.js';
+import { aEstrella } from './aEstrella.js';
 
 // Instancia de la clase para manejar el estado del mapa
 const mapState = new MapState();
@@ -179,6 +180,11 @@ function executeAlgorithm(algorithm) {
 			break;
 		case 'AStar':
 			console.log("Ejecutando A*")
+			const initialStateAst = new MapState();
+            initialStateAst.matrix = mapState.getMatrix(); // Usar la matriz actual
+            initialStateAst.initializePositions(); // Inicializar posiciones
+            const pathAst = aEstrella(initialStateAst); // Llamar al algoritmo de búsqueda A*
+            console.log("Camino encontrado:", pathAst);
 			break;
 	}
 }
