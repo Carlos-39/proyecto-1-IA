@@ -1,5 +1,5 @@
-import { Nodo } from './nodo.js';
-import { MapState } from './map.js';
+import { Nodo } from '../nodo.js';
+import { MapState } from '../map.js';
 
 export function profundidad(initialState) {
     const stack = [];

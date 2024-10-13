@@ -1,5 +1,5 @@
-import { Nodo } from './nodo.js';
-import { MapState } from './map.js';
+import { Nodo } from '../nodo.js';
+import { MapState } from '../map.js';
 
 // Función heuristica -> suma de la distancia hasta el pasajero y luego hasta el destino
 function heuristica(posActual, posPasajero, posDestino, tienePasajero) {

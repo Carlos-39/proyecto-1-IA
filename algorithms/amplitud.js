@@ -1,7 +1,7 @@
-import { Nodo } from './nodo.js';
-import { MapState } from './map.js';
+import { Nodo } from '../nodo.js';
+import { MapState } from '../map.js';
 
-export function costoUniforme(initialState) {
+export function amplitud(initialState) {
     // Cola para los nodos por explorar
     const queue = [];
     const explored = new Set(); // Conjunto para almacenar nodos explorados
@@ -12,9 +12,6 @@ export function costoUniforme(initialState) {
     queue.push(initialNode);
 
     while (queue.length > 0) {
-		// Ordenar la cola por costo acumulado y sacar el nodo con menor costo
-        queue.sort((a, b) => a.costo - b.costo);
-
         const currentNode = queue.shift(); // Sacar el primer nodo de la cola
 		currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
@@ -24,7 +21,6 @@ export function costoUniforme(initialState) {
 			console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
 			console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`)
             console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
-			console.log(`Costo final: ${currentNode.costo}`)
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 
