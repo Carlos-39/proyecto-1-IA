@@ -143,8 +143,60 @@ document.getElementById('informedAlgorithmForm').addEventListener('submit', (eve
 	executeAlgorithm(selectedAlgorithm);
 })
 
+// Función para animar el movimiento del vehículo por el camino encontrado
+function animatePath(path) {
+    const mapContainer = document.getElementById('mapContainer');
+    const tableCells = mapContainer.getElementsByTagName('td');
+    
+    // Limpiar cualquier movimiento previo
+    for (let cell of tableCells) {
+        if (cell.classList.contains('vehicle')) {
+            cell.classList.remove('vehicle');
+        }
+    }
+
+	// Marcar la celda inicial casilla libre
+    const startCell = path[0];
+    const startCellIndex = startCell[0] * mapState.getMatrix()[0].length + startCell[1]; // fila * ancho + columna
+    tableCells[startCellIndex].classList.remove('elemento-2');
+	tableCells[startCellIndex].classList.add('elemento-0');
+
+    let index = 0; // Inicializa el índice del camino
+    const interval = setInterval(() => {
+        // Limpiar la clase del vehículo en la celda anterior
+        if (index > 0) {
+            const prevCell = path[index - 1];
+            const prevCellIndex = prevCell[0] * mapState.getMatrix()[0].length + prevCell[1]; // fila * ancho + columna
+            tableCells[prevCellIndex].classList.remove('vehicle');
+        }
+
+        // Si hemos llegado al final del camino, limpiar el intervalo
+        if (index >= path.length) {
+            clearInterval(interval);
+            return;
+        }
+
+        // Obtener la celda actual y añadir la clase de vehículo
+        const currentCell = path[index];
+        const currentCellIndex = currentCell[0] * mapState.getMatrix()[0].length + currentCell[1]; // fila * ancho + columna
+        tableCells[currentCellIndex].classList.add('vehicle');
+
+		// Verificar si el vehículo ha llegado a la casilla del pasajero
+        const { passenger } = mapState.getPositions();
+        if (currentCell[0] === passenger[0] && currentCell[1] === passenger[1]) {
+            // Cambiar la clase de la celda del pasajero a una casilla libre
+            tableCells[currentCellIndex].classList.remove('elemento-5');
+            tableCells[currentCellIndex].classList.add('elemento-0');
+        }
+
+        index++; // Mover al siguiente índice
+    }, 500); // tiempo de cambio de 500ms
+}
+
 // función para ejecutar el algoritmo seleccionado
 function executeAlgorithm(algorithm) {
+	let path
+
 	switch (algorithm) {
 		case 'amplitud':
 			console.log("Ejecutando amplitud")
@@ -153,6 +205,7 @@ function executeAlgorithm(algorithm) {
             initialStateAmp.initializePositions(); // Inicializar posiciones
             const pathAmp = amplitud(initialStateAmp); // Llamar al algoritmo de amplitud
             console.log("Camino encontrado:", pathAmp);
+			path = pathAmp;
 			break;
 		case 'costoUniforme':
 			console.log("Ejecutando costo uniforme")
@@ -161,6 +214,7 @@ function executeAlgorithm(algorithm) {
             initialStateCost.initializePositions(); // Inicializar posiciones
             const pathCost = costoUniforme(initialStateCost); // Llamar al algoritmo de amplitud
             console.log("Camino encontrado:", pathCost);
+			path = pathCost;
 			break;
 		case 'profundidad':
 			console.log("Ejecutando profundidad");
@@ -169,6 +223,7 @@ function executeAlgorithm(algorithm) {
             initialStateProf.initializePositions(); // Inicializar posiciones
             const pathProf = profundidad(initialStateProf); // Llamar al algoritmo de profundidad
             console.log("Camino encontrado:", pathProf);
+			path = pathProf
 			break;
 		case 'avara':
 			console.log("Ejecutando avara")
@@ -177,6 +232,7 @@ function executeAlgorithm(algorithm) {
             initialStateAva.initializePositions(); // Inicializar posiciones
             const pathAva = avara(initialStateAva); // Llamar al algoritmo de búsqueda avara
             console.log("Camino encontrado:", pathAva);
+			path = pathAva
 			break;
 		case 'AStar':
 			console.log("Ejecutando A*")
@@ -185,6 +241,10 @@ function executeAlgorithm(algorithm) {
             initialStateAst.initializePositions(); // Inicializar posiciones
             const pathAst = aEstrella(initialStateAst); // Llamar al algoritmo de búsqueda A*
             console.log("Camino encontrado:", pathAst);
+			path = pathAst
 			break;
 	}
+
+	// Animar el camino encontrado
+    animatePath(path);
 }

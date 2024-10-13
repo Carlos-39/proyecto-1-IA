@@ -6,7 +6,7 @@
 	--color-traficoPesado: linear-gradient(90deg, #d82b56,#be264c,#920c2d);
 	--color-pasajero: linear-gradient(90deg, #e292fe,#be38f3,#7a219e);;
 	--color-destino: linear-gradient(90deg, #20a82f,#52cb54,#7aef78); 
-	--color-inicio: linear-gradient(90deg, #fbd309,#f3a119);;
+	--color-inicio: linear-gradient(90deg, #fbd309,#f3a119);
 	--color-light: linear-gradient(90deg, #eae9f6,#ebebeb);
 	--color-muro-mejorado: linear-gradient(90deg, #09090c,#1a1b23);
 }
@@ -29,10 +29,18 @@ html{
 /* Colores para cada tipo de celda */
 .elemento-0 { background: var(--color-light); } /* tráfico liviano */
 .elemento-1 { background: var(--color-muro-mejorado); } /* muro */
-.elemento-2 { background: var(--color-inicio); } /* punto de partida */
+.elemento-2 {  /* Vehículo y punto inicial */
+	background-image: url('./assets/carro.png');
+	background-size: cover;
+	background-position: center;
+}
 .elemento-3 { background: var(--color-traficoMedio); } /* tráfico medio */
 .elemento-4 { background: var(--color-traficoPesado); } /* tráfico pesado */
-.elemento-5 { background: var(--color-pasajero); } /* pasajero */
+.elemento-5 {  /* Pasajero */
+	background-image: url('./assets/pasajero.png');
+	background-size: cover;
+	background-position: center;
+}
 .elemento-6 { background: var(--color-destino); } /* destino */
 
 /* Estilos del header */
@@ -341,4 +349,11 @@ html{
 	background: linear-gradient(42deg, #0945f7,#8d10b8,#6b0ac4);
 	color: #fff;
 	font-weight: bold;
+}
+
+/* estilo para la animación del vehículo */
+.vehicle {
+	background-image: url('./assets/carro.png');
+	background-size: cover;
+	background-position: center;
 }
