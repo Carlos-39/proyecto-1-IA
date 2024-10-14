@@ -1,9 +1,9 @@
 import { MapState } from './map.js'
-import { profundidad } from './profundidad.js'; 
-import { amplitud } from './amplitud.js';
-import { costoUniforme } from './costo.js';
-import { avara } from './avara.js';
-import { aEstrella } from './aEstrella.js';
+import { profundidad } from './algorithms/profundidad.js'; 
+import { amplitud } from './algorithms/amplitud.js';
+import { costoUniforme } from './algorithms/costo.js';
+import { avara } from './algorithms/avara.js';
+import { aEstrella } from './algorithms/aEstrella.js';
 
 // Instancia de la clase para manejar el estado del mapa
 const mapState = new MapState();

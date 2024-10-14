@@ -1,7 +1,7 @@
-import { Nodo } from './nodo.js';
-import { MapState } from './map.js';
+import { Nodo } from '../nodo.js';
+import { MapState } from '../map.js';
 
-export function costoUniforme(initialState) {
+export function amplitud(initialState) {
     // Cola para los nodos por explorar
     const queue = [];
     const explored = new Set(); // Conjunto para almacenar nodos explorados
@@ -11,20 +11,21 @@ export function costoUniforme(initialState) {
     const initialNode = new Nodo(initialState);
     queue.push(initialNode);
 
-    while (queue.length > 0) {
-		// Ordenar la cola por costo acumulado y sacar el nodo con menor costo
-        queue.sort((a, b) => a.costo - b.costo);
+    // Tiempo de inicio
+    const startTime = performance.now();
 
+    while (queue.length > 0) {
         const currentNode = queue.shift(); // Sacar el primer nodo de la cola
 		currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
-			console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
-			console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
-			console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`)
-            console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
-			console.log(`Costo final: ${currentNode.costo}`)
+            const endTime = performance.now(); // Tiempo de fin de la búsqueda
+            console.log('Termino la búsqueda')
+			console.log(`Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`);
+			console.log(`Profundidad del nodo meta encontrado: ${currentNode.profundidad}`);
+			console.log(`Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`)
+            console.log(`Tiempo de cómputo: ${(endTime - startTime).toFixed(2)} ms`)
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 
@@ -54,7 +55,7 @@ export function costoUniforme(initialState) {
         }
 
 		// Actualizar la profundidad máxima
-		if (currentNode.profundidad > profundidadMaxima) {
+		if (currentNode.profundidad >= profundidadMaxima) {
 			profundidadMaxima = currentNode.profundidad;
 		}
     }

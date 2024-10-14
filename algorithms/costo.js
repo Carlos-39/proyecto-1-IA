@@ -1,26 +1,35 @@
-import { Nodo } from './nodo.js';
-import { MapState } from './map.js';
+import { Nodo } from '../nodo.js';
+import { MapState } from '../map.js';
 
-export function profundidad(initialState) {
-    // Pila para los nodos por explorar
-    const stack = [];
+export function costoUniforme(initialState) {
+    // Cola de prioridad para los nodos por explorar
+    const queue = [];
     const explored = new Set(); // Conjunto para almacenar nodos explorados
-    let profundidadMaxima = 0; // Profundidad máxima del árbol
+	let profundidadMaxima = 0; // Profundidad máxima del árbol
 
-    // Crear el nodo inicial y añadirlo a la pila
+    // Crear el nodo inicial y añadirlo a la cola
     const initialNode = new Nodo(initialState);
-    stack.push(initialNode);
+    queue.push(initialNode);
 
-    while (stack.length > 0) {
-        const currentNode = stack.pop(); // Sacar el último nodo de la pila
-        currentNode.expandir(); // Incrementar el contador de nodos expandidos
+    // Tiempo de inicio
+    const startTime = performance.now();
+
+    while (queue.length > 0) {
+		// Ordenar la cola por costo acumulado y sacar el nodo con menor costo
+        queue.sort((a, b) => a.costo - b.costo);
+
+        const currentNode = queue.shift(); // Sacar el primer nodo de la cola
+		currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
-            console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
-            console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
-            console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`);
-            console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
+			const endTime = performance.now(); // Tiempo de fin de la búsqueda
+            console.log('Termino la búsqueda')
+			console.log(`Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`);
+			console.log(`Profundidad del nodo meta encontrado: ${currentNode.profundidad}`);
+			console.log(`Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`)
+            console.log(`Costo final de la solución encontrada: ${currentNode.costo}`)
+            console.log(`Tiempo de cómputo: ${(endTime - startTime).toFixed(2)} ms`)
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 
@@ -41,7 +50,7 @@ export function profundidad(initialState) {
                 position: childNode.estado.getPositions().start,
                 tienePasajero: childNode.tienePasajero
             }))) {
-                stack.push(childNode); // Agregar el nodo hijo a la pila
+                queue.push(childNode);
                 explored.add(JSON.stringify({
                     position: childNode.estado.getPositions().start,
                     tienePasajero: childNode.tienePasajero
@@ -49,13 +58,13 @@ export function profundidad(initialState) {
             }
         }
 
-        // Actualizar la profundidad máxima
-        if (currentNode.profundidad > profundidadMaxima) {
-            profundidadMaxima = currentNode.profundidad;
-        }
+		// Actualizar la profundidad máxima
+		if (currentNode.profundidad >= profundidadMaxima) {
+			profundidadMaxima = currentNode.profundidad;
+		}
     }
 
-    console.log(`No se encontró solución. Profundidad máxima alcanzada: ${profundidadMaxima}`); // Imprimir si no hay solución
+	console.log(`No se encontró solución. Profundidad máxima alcanzada: ${profundidadMaxima}`); // Imprimir si no hay solución
     return []; // Si no se encuentra solución, retornar vacío
 }
 

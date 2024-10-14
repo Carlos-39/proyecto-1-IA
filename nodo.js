@@ -77,7 +77,8 @@ export class Nodo {
 
     	    // Colocar el vehículo en la nueva posición
     	    nuevoEstado.start = [nuevoX, nuevoY];
-    	    nuevoEstado.matrix[nuevoX][nuevoY] = 2;  // 2 representa el vehículo
+
+    	    nuevoEstado.matrix[nuevoX][nuevoY] = 2;  // Coloca el vehículo en la nueva posición
 
 			let tienePasajero = this.tienePasajero;
 
@@ -86,11 +87,11 @@ export class Nodo {
 				tienePasajero = true;
 			}
 
+			// esto se va a borrar
 			console.log(`Posición del vehículo: [${x}, ${y}]`);
 			console.log(`Nueva posición: [${nuevoX}, ${nuevoY}]`);
-			console.log(`Costo acumulado antes del movimiento: ${this.costo}`);
-			console.log(`Costo del movimiento: ${costoMovimiento}`);
 
+			// return del nuevo nodo
     	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + costoMovimiento, null, tienePasajero);
 		}
 

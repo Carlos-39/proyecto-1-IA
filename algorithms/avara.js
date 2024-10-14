@@ -1,5 +1,5 @@
-import { Nodo } from './nodo.js';
-import { MapState } from './map.js';
+import { Nodo } from '../nodo.js';
+import { MapState } from '../map.js';
 
 // Función heuristica -> suma de la distancia hasta el pasajero y luego hasta el destino
 function heuristica(posActual, posPasajero, posDestino, tienePasajero) {
@@ -31,28 +31,32 @@ export function avara(initialState) {
 
     // Crear el nodo inicial y añadirlo a la cola
     const initialNode = new Nodo(initialState);
+
+    // Agregar el valor de heuristica al nodo
 	initialNode.heuristica = heuristica(initialState.start, passenger, destination, initialNode.tienePasajero);  // Calcular heurística
+    
     queue.push(initialNode);
 
+    // Tiempo de inicio
+    const startTime = performance.now();
+
     while (queue.length > 0) {
-		// Ordenar la cola por el valor de la heurística
+		// Ordenar la cola por el valor de la heurística del nodo y sacar el nodo con menor heuristica
         queue.sort((a, b) => a.heuristica - b.heuristica);
 
         const currentNode = queue.shift(); // Sacar el primer nodo de la cola
-
-		// Mostrar la posición actual y su heurística
-		const currentPos = currentNode.estado.getPositions().start;
-		console.log(`Expandiendo nodo en posición ${currentPos} con heurística: ${currentNode.heuristica}`);
-
 		currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
-			console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
-			// console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
-			// console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`)
-            console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
-			// console.log(`Costo final: ${currentNode.costo}`)
+			const endTime = performance.now(); // Tiempo de fin de la búsqueda
+            console.log('Termino la búsqueda')
+			console.log(`Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`);
+			console.log(`Profundidad del nodo meta encontrado: ${currentNode.profundidad}`);
+			console.log(`Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`)
+            console.log(`Heurística inicial: ${initialNode.heuristica}`)
+            console.log(`Heurística final de la solución encontrada: ${currentNode.heuristica}`)
+            console.log(`Tiempo de cómputo: ${(endTime - startTime).toFixed(2)} ms`)
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 
@@ -80,10 +84,6 @@ export function avara(initialState) {
 					destination, 
 					childNode.tienePasajero
 				);
-                
-				// Mostrar la heurística del nodo hijo antes de añadirlo a la cola
-				const childPos = childNode.estado.getPositions().start;
-				console.log(`Nodo hijo en posición ${childPos} con heurística: ${childNode.heuristica}`);
 				
 				queue.push(childNode);
                 explored.add(JSON.stringify({
@@ -94,7 +94,7 @@ export function avara(initialState) {
         }
 
 		// Actualizar la profundidad máxima
-		if (currentNode.profundidad > profundidadMaxima) {
+		if (currentNode.profundidad >= profundidadMaxima) {
 			profundidadMaxima = currentNode.profundidad;
 		}
     }

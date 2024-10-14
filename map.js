@@ -12,6 +12,7 @@ export class MapState {
     	this.matrix = content.trim().split('\n').map(line => line.split(' ').map(Number));
 	}
 
+	// función que encuentra una posición en el mapa
 	findPosition(value) {
 		for (let i = 0; i < this.matrix.length; i++) {
 			for (let j = 0; j < this.matrix[i].length; j++) {
