@@ -87,10 +87,6 @@ export class Nodo {
 				tienePasajero = true;
 			}
 
-			// esto se va a borrar
-			console.log(`Posición del vehículo: [${x}, ${y}]`);
-			console.log(`Nueva posición: [${nuevoX}, ${nuevoY}]`);
-
 			// return del nuevo nodo
     	    return new Nodo(nuevoEstado, this, operador, this.profundidad + 1, this.costo + costoMovimiento, null, tienePasajero);
 		}
