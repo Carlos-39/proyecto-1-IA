@@ -30,25 +30,39 @@ export function aEstrella(initialState) {
 	const { passenger, destination } = initialState.getPositions(); 	
 
     // Crear el nodo inicial y añadirlo a la cola
-    const initialNode = new Nodo(initialState, null, null, 0, 0, 0, false);
+    const initialNode = new Nodo(initialState);
+
+    // Agregar el valor de heuristica al nodo
 	initialNode.heuristica = heuristica(initialState.start, passenger, destination, initialNode.tienePasajero);  // Calcular heurística
+    
     queue.push(initialNode);
 
+    // Tiempo de inicio
+    const startTime = performance.now();
+
     while (queue.length > 0) {
-		// Ordenar la cola por el valor de la heurística
+		// Ordenar la cola de nodos por el valor total (costo acumulado + heurística) para priorizar el nodo con menor costo total
         queue.sort((a, b) => (a.costo + a.heuristica) - (b.costo + b.heuristica));
 
         const currentNode = queue.shift(); // Sacar el primer nodo de la cola
-
 		currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
-			console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
-			// console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
-			// console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`)
-            console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
-			console.log(`Costo final: ${currentNode.costo}`)
+			const endTime = performance.now(); // Tiempo de fin de la búsqueda
+            const tiempoComputo = (endTime - startTime).toFixed(2)
+
+            document.getElementById('nodosExpandidos').textContent = `Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`;
+            document.getElementById('profundidadMeta').textContent = `Profundidad del nodo meta encontrado: ${currentNode.profundidad}`;
+            document.getElementById('profundidadMaxima').textContent = `Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`;
+            document.getElementById('heuristicaInicial').textContent = `Heurística inicial: ${initialNode.heuristica}`;
+            document.getElementById('heuristicaFinal').textContent = `Heurística final de la solución encontrada: ${currentNode.heuristica}`;
+            document.getElementById('costo').textContent = `Costo final de la solución encontrada: ${currentNode.costo}`;
+            document.getElementById('tiempoComputo').textContent = `Tiempo de cómputo: ${tiempoComputo} ms`;
+            
+            document.getElementById('algorithmInfo').classList.remove('invisible')
+            document.getElementById('algorithmInfo').classList.add('visible')
+
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 

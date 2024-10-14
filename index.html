@@ -96,6 +96,25 @@
 
 	</main>
 
+	<!-- sección para la zona de información sobre la búsqueda empleada -->
+	<section id="algorithmInfo" class="algorithm-info-container invisible">
+		<h3>Resultados del algoritmo</h3>
+		<div class="algorithm-results-container">
+			<p id="nodosExpandidos">Cantidad de nodos expandidos: </p>
+			<p id="profundidadMeta">Profundidad del nodo meta encontrado: </p>
+			<p id="profundidadMaxima">Profundidad máxima del árbol alcanzada: </p>
+			<p id="heuristicaInicial">Heurística inicial: </p>
+			<p id="heuristicaFinal">Heurística final de la solución encontrada: </p>
+			<p id="costo">Costo final de la solución encontrada: </p>
+			<p id="tiempoComputo">Tiempo de cómputo: </p>
+		</div>
+	</section>
+
 	<script type="module" src="./script.js"></script>
+	<script type="module" src="./algorithms/amplitud.js"></script>
+	<script type="module" src="./algorithms/costo.js"></script>
+	<script type="module" src="./algorithms/profundidad.js"></script>
+	<script type="module" src="./algorithms/avara.js"></script>
+	<script type="module" src="./algorithms/aEstrella.js"></script>
 </body>
 </html>

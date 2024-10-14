@@ -21,11 +21,19 @@ export function amplitud(initialState) {
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
             const endTime = performance.now(); // Tiempo de fin de la búsqueda
-            console.log('Termino la búsqueda')
-			console.log(`Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`);
-			console.log(`Profundidad del nodo meta encontrado: ${currentNode.profundidad}`);
-			console.log(`Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`)
-            console.log(`Tiempo de cómputo: ${(endTime - startTime).toFixed(2)} ms`)
+            const tiempoComputo = (endTime - startTime).toFixed(2)
+
+            document.getElementById('nodosExpandidos').textContent = `Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`;
+            document.getElementById('profundidadMeta').textContent = `Profundidad del nodo meta encontrado: ${currentNode.profundidad}`;
+            document.getElementById('profundidadMaxima').textContent = `Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`;
+            document.getElementById('heuristicaInicial').textContent = `Heurística inicial no requerida`;
+            document.getElementById('heuristicaFinal').textContent = `Heurística final no requerida`;
+            document.getElementById('costo').textContent = `Costo final no requerido`;
+            document.getElementById('tiempoComputo').textContent = `Tiempo de cómputo: ${tiempoComputo} ms`;
+            
+            document.getElementById('algorithmInfo').classList.remove('invisible')
+            document.getElementById('algorithmInfo').classList.add('visible')
+
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 
