@@ -55,7 +55,7 @@ export function amplitud(initialState) {
         }
 
 		// Actualizar la profundidad máxima
-		if (currentNode.profundidad > profundidadMaxima) {
+		if (currentNode.profundidad >= profundidadMaxima) {
 			profundidadMaxima = currentNode.profundidad;
 		}
     }
