@@ -30,25 +30,34 @@ export function aEstrella(initialState) {
 	const { passenger, destination } = initialState.getPositions(); 	
 
     // Crear el nodo inicial y añadirlo a la cola
-    const initialNode = new Nodo(initialState, null, null, 0, 0, 0, false);
+    const initialNode = new Nodo(initialState);
+
+    // Agregar el valor de heuristica al nodo
 	initialNode.heuristica = heuristica(initialState.start, passenger, destination, initialNode.tienePasajero);  // Calcular heurística
+    
     queue.push(initialNode);
 
+    // Tiempo de inicio
+    const startTime = performance.now();
+
     while (queue.length > 0) {
-		// Ordenar la cola por el valor de la heurística
+		// Ordenar la cola de nodos por el valor total (costo acumulado + heurística) para priorizar el nodo con menor costo total
         queue.sort((a, b) => (a.costo + a.heuristica) - (b.costo + b.heuristica));
 
         const currentNode = queue.shift(); // Sacar el primer nodo de la cola
-
 		currentNode.expandir(); // Incrementar el contador de nodos expandidos
 
         // Verificar si es el nodo meta
         if (currentNode.esMeta()) {
-			console.log(`Nodos expandidos: ${Nodo.nodosExpandidos}`);
-			// console.log(`Profundidad del árbol: ${currentNode.profundidad}`);
-			// console.log(`Profundidad máxima alcanzada: ${profundidadMaxima}`)
-            console.log(`El pasajero ha sido recogido: ${currentNode.tienePasajero ? 'Sí' : 'No'}`);
-			console.log(`Costo final: ${currentNode.costo}`)
+			const endTime = performance.now(); // Tiempo de fin de la búsqueda
+            console.log('Termino la búsqueda')
+			console.log(`Cantidad de nodos expandidos: ${Nodo.nodosExpandidos}`);
+			console.log(`Profundidad del nodo meta encontrado: ${currentNode.profundidad}`);
+			console.log(`Profundidad máxima del árbol alcanzada: ${profundidadMaxima}`)
+            console.log(`Heurística inicial: ${initialNode.heuristica}`)
+            console.log(`Heurística final de la solución encontrada: ${currentNode.heuristica}`)
+            console.log(`Costo final de la solución encontrada: ${currentNode.costo}`)
+            console.log(`Tiempo de cómputo: ${(endTime - startTime).toFixed(2)} ms`)
             return constructPath(currentNode); // Retornar el camino hacia la meta
         }
 

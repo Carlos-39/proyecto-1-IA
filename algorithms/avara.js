@@ -78,12 +78,7 @@ export function avara(initialState) {
                 tienePasajero: childNode.tienePasajero
             }))) {
 				// Calcular la heurística combinada para el nodo hijo
-                childNode.heuristica = heuristica(
-					childNode.estado.getPositions().start, 
-					passenger, 
-					destination, 
-					childNode.tienePasajero
-				);
+                childNode.heuristica = heuristica(childNode.estado.getPositions().start, passenger, destination, childNode.tienePasajero);
 				
 				queue.push(childNode);
                 explored.add(JSON.stringify({
